@@ -6,12 +6,14 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="120" id="VTn-34-5ed">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="eventDetailsCell" rowHeight="120" id="VTn-34-5ed">
             <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VTn-34-5ed" id="5F9-gH-xVs">
@@ -42,6 +44,7 @@
                 </subviews>
                 <color key="backgroundColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="0.0" colorSpace="calibratedRGB"/>
             </tableViewCellContentView>
+            <point key="canvasLocation" x="34" y="56"/>
         </tableViewCell>
         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1WB-yN-J48">
             <rect key="frame" x="0.0" y="0.0" width="375" height="126"/>
@@ -107,30 +110,89 @@
             </tableViewCellContentView>
             <point key="canvasLocation" x="34" y="354"/>
         </tableViewCell>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="90" id="pRJ-LI-y56">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="90" id="8Vb-Sk-TBM" customClass="CityDetailsTableViewCell" customModule="iOSAssignment1" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
             <autoresizingMask key="autoresizingMask"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pRJ-LI-y56" id="Ilz-G0-ecB">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="89.5"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8Vb-Sk-TBM" id="4Tw-bF-bfm" customClass="CityDetailsTableViewCell" customModule="iOSAssignment1" customModuleProvider="target">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="3000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wc9-LI-7dW">
-                        <rect key="frame" x="276" y="19" width="77" height="50"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="3000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9US-dm-Ubq">
+                        <rect key="frame" x="286" y="23" width="71.333333333333314" height="44"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="32"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Melbourne" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hfO-ME-EbB">
-                        <rect key="frame" x="51" y="19" width="217" height="50"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Melbourne" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dqh-Dc-1Ua">
+                        <rect key="frame" x="45" y="23" width="233" height="44"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="32"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <color key="backgroundColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="cityNameLabel" destination="dqh-Dc-1Ua" id="cXi-l0-Nyy"/>
+                <outlet property="cityPostcodeLabel" destination="9US-dm-Ubq" id="ivv-Vb-Zy6"/>
+            </connections>
             <point key="canvasLocation" x="533.5" y="-144"/>
+        </tableViewCell>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="eventDetailsCell" rowHeight="126" id="sbu-Ci-c3S">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="126"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sbu-Ci-c3S" id="yKK-8X-7fe">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="125.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BNy-nj-fEB">
+                        <rect key="frame" x="297" y="28" width="70" height="70"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="BNy-nj-fEB" secondAttribute="height" multiplier="1:1" id="JzR-ki-ra0"/>
+                            <constraint firstAttribute="height" constant="70" id="bYH-6Y-FXx"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:30am" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E1H-py-Z5P">
+                        <rect key="frame" x="8" y="28" width="54.5" height="70"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="54.5" id="Tbh-aY-kgz"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ringwood Basketball Stadium" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ifn-qG-dci">
+                        <rect key="frame" x="70.5" y="69" width="218.5" height="19.5"/>
+                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Basketball Game" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nbi-4d-vNN">
+                        <rect key="frame" x="70.5" y="28" width="218.5" height="33"/>
+                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="24"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="BNy-nj-fEB" firstAttribute="centerY" secondItem="yKK-8X-7fe" secondAttribute="centerY" id="2SZ-xa-lSJ"/>
+                    <constraint firstItem="Ifn-qG-dci" firstAttribute="leading" secondItem="E1H-py-Z5P" secondAttribute="trailing" constant="8" id="HEa-Ct-8Wf"/>
+                    <constraint firstItem="BNy-nj-fEB" firstAttribute="leading" secondItem="Ifn-qG-dci" secondAttribute="trailing" constant="8" id="J0I-vn-K98"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="BNy-nj-fEB" secondAttribute="bottom" constant="20" id="Wyf-hw-UkO"/>
+                    <constraint firstItem="Ifn-qG-dci" firstAttribute="trailing" secondItem="nbi-4d-vNN" secondAttribute="trailing" id="dzn-tZ-Ci8"/>
+                    <constraint firstItem="BNy-nj-fEB" firstAttribute="top" secondItem="E1H-py-Z5P" secondAttribute="top" id="fyD-40-ixg"/>
+                    <constraint firstItem="E1H-py-Z5P" firstAttribute="leading" secondItem="yKK-8X-7fe" secondAttribute="leadingMargin" id="ivo-UO-bcE"/>
+                    <constraint firstItem="BNy-nj-fEB" firstAttribute="trailing" secondItem="yKK-8X-7fe" secondAttribute="trailingMargin" id="mhf-DE-tn7"/>
+                    <constraint firstItem="BNy-nj-fEB" firstAttribute="bottom" secondItem="E1H-py-Z5P" secondAttribute="bottom" id="q86-RN-Uwh"/>
+                    <constraint firstItem="Ifn-qG-dci" firstAttribute="top" secondItem="nbi-4d-vNN" secondAttribute="bottom" constant="8" id="u3F-fR-wLA"/>
+                    <constraint firstItem="nbi-4d-vNN" firstAttribute="top" secondItem="BNy-nj-fEB" secondAttribute="top" id="xax-cB-9GA"/>
+                    <constraint firstItem="Ifn-qG-dci" firstAttribute="leading" secondItem="nbi-4d-vNN" secondAttribute="leading" id="yGf-8l-fcH"/>
+                    <constraint firstItem="BNy-nj-fEB" firstAttribute="top" secondItem="yKK-8X-7fe" secondAttribute="topMargin" constant="20" id="yib-i4-ABg"/>
+                </constraints>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="-395.5" y="-126"/>
         </tableViewCell>
     </objects>
 </document>

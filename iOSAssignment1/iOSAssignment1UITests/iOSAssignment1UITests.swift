@@ -30,6 +30,19 @@ class iOSAssignment1UITests: XCTestCase {
     
     func testExample() {
         // Use recording to get started writing UI tests.
+        
+        let pageInd = XCUIApplication().pageIndicators.element(boundBy: 0)
+        let todayButton = XCUIApplication().buttons["Today"]
+        XCTAssert(pageInd.value as! String == "page 1 of 5")
+        pageInd.swipeLeft()
+        XCTAssert(pageInd.value as! String == "page 2 of 5")
+        pageInd.swipeLeft()
+        XCTAssert(pageInd.value as! String == "page 3 of 5")
+        todayButton.tap()
+        XCTAssert(pageInd.value as! String == "page 1 of 5")
+        
+        
+        
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
     
