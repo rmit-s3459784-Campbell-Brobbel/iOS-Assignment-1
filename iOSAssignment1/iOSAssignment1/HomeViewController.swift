@@ -58,6 +58,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "eventDetailsCell")! as! EventDetailsTableViewCell
         
+        
+        // Needs Fixing
         cell.updateCellWithEvent(event: EventManager.shared.eventsFor(day: day)[indexPath.row])
         
 
@@ -69,7 +71,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as! EventDetailsTableViewCell
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
@@ -142,7 +143,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             dest.citySelector = self
         }
         else if segue.identifier == "eventDetailsSegue" {
-            let dest = segue.destination as! EventDetailsViewController
+            
+            let nav = segue.destination as! UINavigationController
+            let dest = nav.viewControllers.first as! EventDetailsViewController
             let cell = sender as! EventDetailsTableViewCell
             dest.event = cell.event
             print(dest.event)

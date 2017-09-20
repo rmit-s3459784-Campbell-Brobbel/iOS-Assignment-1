@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class EventDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CityNavBarDelegate {
     
@@ -14,18 +15,14 @@ class EventDetailsViewController: UIViewController, UITableViewDelegate, UITable
     var sectionTitles : [String] = ["Location", "Time", "Other Details"]
     
     @IBOutlet weak var eventDetailsTableView: UITableView!
-    @IBOutlet weak var navBar : CityNavBar!
     override func viewDidLoad() {
         super.viewDidLoad()
         self.eventDetailsTableView.dataSource = self
         self.eventDetailsTableView.delegate = self
-        self.navBar.delegate = self
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     func numberOfSections(in tableView: UITableView) -> Int {
         return 4
@@ -40,7 +37,7 @@ class EventDetailsViewController: UIViewController, UITableViewDelegate, UITable
         case 0:
             return 1
         case 1:
-            return 2
+            return 3
         case 2:
             return 1
         default:
@@ -50,38 +47,40 @@ class EventDetailsViewController: UIViewController, UITableViewDelegate, UITable
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        var cell : UITableViewCell!
-        
-        
         if indexPath.section == 0 {
-            cell = tableView.dequeueReusableCell(withIdentifier: "eventTitleCell")!
+            let cell = tableView.dequeueReusableCell(withIdentifier: "eventTitleCell")!
             cell.textLabel?.text = "\(event!.eventTitle)"
             return cell
         }
-        
-       
-        
-        
-        
+    
         if indexPath.section == 1 {
-            cell = tableView.dequeueReusableCell(withIdentifier: "eventDetailCell")!
-            switch indexPath.row {
-            case 0:
-                cell.textLabel?.text = "City"
-                cell.detailTextLabel?.text = "\(event!.location.city!)"
-
-            case 1:
-                cell.textLabel?.text = "Country"
-                cell.detailTextLabel?.text = "\(event!.location.country!)"
-                
-            default:
-                break
+            if indexPath.row < 2 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "eventDetailCell")!
+                switch indexPath.row {
+                case 0:
+                    cell.textLabel?.text = "City"
+                    cell.detailTextLabel?.text = "\(event!.location.city!)"
+                    
+                case 1:
+                    cell.textLabel?.text = "Country"
+                    cell.detailTextLabel?.text = "\(event!.location.country!)"
+                    
+                    
+                default:
+                    break
+                }
+                return cell
+            }
+            else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "mapViewCell") as! EventLocationTableViewCell
+                cell.updateLocationWith(eventDetails: self.event!)
+                return cell
             }
             
         }
         
         else if indexPath.section == 2 {
-            cell = tableView.dequeueReusableCell(withIdentifier: "eventDetailCell")!
+            let cell = tableView.dequeueReusableCell(withIdentifier: "eventDetailCell")!
             let date = Calendar.current.component(Calendar.Component.day, from: (event?.eventDateTime)!)
             let month = Calendar.current.component(Calendar.Component.month, from: (event?.eventDateTime)!)
             let year = Calendar.current.component(Calendar.Component.year, from: (event?.eventDateTime)!)
@@ -96,23 +95,27 @@ class EventDetailsViewController: UIViewController, UITableViewDelegate, UITable
                 cell.textLabel?.text = "Time"
                 cell.detailTextLabel?.text = "\(hour):\(minute)"
             }
+            return cell
         }
         
         else {
-            cell = tableView.dequeueReusableCell(withIdentifier: "eventDetailCellWithDisclosure")!
+            let cell = tableView.dequeueReusableCell(withIdentifier: "eventDetailCellWithDisclosure")!
             cell.textLabel?.text = "Temperature"
             cell.detailTextLabel?.text = "\(Int(self.event!.forecast!.temp))℃"
+            return cell
+
         }
         
-        return cell
         
     }
-    
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
             return 65
+        }
+        else if indexPath.section == 1 && indexPath.row == 2{
+            return 200
         }
         
         return 45
@@ -135,7 +138,7 @@ class EventDetailsViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     
-    func cancelButtonPressed() {
+    @IBAction func cancelButtonPressed() {
         self.dismiss(animated: true, completion: nil)
     }
     
