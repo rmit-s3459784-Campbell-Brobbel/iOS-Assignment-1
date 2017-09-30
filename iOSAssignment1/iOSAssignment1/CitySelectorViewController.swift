@@ -39,20 +39,45 @@ class CitySelectorViewController: UIViewController, UITableViewDataSource, UITab
     // MARK:- Table View Data Source/Delegate
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return WeatherManager.shared.cities.count
+        if section == 0 {
+            return WeatherManager.shared.cities.count
+
+        }
+        return WeatherManager.shared.userCities.count
+
     }
     
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Major Cities"
+        }
+        return "User Cities"
+    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let location = WeatherManager.shared.cities[indexPath.row]
+        var location : Location!
+        if indexPath.section == 0 {
+            location = WeatherManager.shared.cities[indexPath.row]
+        }
+        else {
+           location = WeatherManager.shared.userCities[indexPath.row]
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: "cityCell")! as! CityTableViewCell
         cell.cityLabel.text = "\(location.city!), \(location.country!)"
         
         return cell
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(WeatherManager.shared.cities[indexPath.row])
-        self.citySelector?.cityChange(city: WeatherManager.shared.cities[indexPath.row])
+        if indexPath.section == 0 {
+            self.citySelector?.cityChange(city: WeatherManager.shared.cities[indexPath.row])
+
+        }
+        else {
+            self.citySelector?.cityChange(city: WeatherManager.shared.userCities[indexPath.row])
+        }
         tableView.deselectRow(at: indexPath, animated: true)
         dismiss(animated: true, completion: nil)
     }

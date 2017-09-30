@@ -11,7 +11,10 @@ import UIKit
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, HomePageDelegate, WeatherNavBarDelegate, UIPopoverPresentationControllerDelegate, CitySelector {
 
     var currentCity : Location = WeatherManager.shared.cities.first!
-
+    let currentDate : Date = Date()
+    
+    /// Amount of seconds per day
+    let daySeconds = 86400
     
     @IBOutlet weak var weatherDetailsView: WeatherDetailsView!
     @IBOutlet weak var eventTableView: UITableView!
@@ -23,12 +26,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print("View Did Load")
         self.eventTableView.dataSource = self
         self.eventTableView.delegate = self
         self.weatherDetailsView.isUserInteractionEnabled = false
-        self.navBar.cityButton.titleLabel?.text = "\(currentCity.city!)"
-        updateWeatherViewFrom(index: 0)
+        
         self.navBar.delegate = self
         self.backgroundImagePageVC = self.childViewControllers[0] as? HomePageViewController
         self.backgroundImagePageVC?.homeDelegate = self
@@ -42,19 +44,40 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Dispose of any resources that can be recreated.
     }
     
-    
+    override func viewDidAppear(_ animated: Bool) {
+        print("Before Did Appear")
+        EventManager.shared.createEvents()
+        print("Weather Manager Cities After Events Init: \(WeatherManager.shared.userCities.count)")
+        
+        
+        let sem = DispatchSemaphore(value: 0)
+        WeatherManager.shared.updateAllCities {
+            EventManager.shared.updateAllEventForecasts()
+            self.navBar.cityButton.titleLabel?.text = "\(currentCity.city!)"
+            updateWeatherViewFrom(index: 0)
+            self.eventTableView.reloadData()
+            //self.weatherDetailsView.isUserInteractionEnabled = true
+            print("Enabling Weather View")
+            sem.signal()
+        }
+        sem.wait()
+        
+        for city in WeatherManager.shared.cityWeatherForecasts {
+            print("\(city.location.city!), \(city.location.country!)")
+        }
+        print("After Did Appear")
+    }
     // MARK:- Table View Data Source/Delegate
-    
+   
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let day =  WeatherManager.shared.cityWeatherForecasts.first!.dailyForecasts[self.currentPage].date
-        print("\(EventManager.shared.eventsFor(day: day).count)")
+        let day =  currentDate.addingTimeInterval(TimeInterval(currentPage * self.daySeconds))
         return EventManager.shared.eventsFor(day: day).count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
-        let day =  WeatherManager.shared.cityWeatherForecasts.first!.dailyForecasts[(self.backgroundImagePageVC?.currentPageIndex)!].date
+        let day =  currentDate.addingTimeInterval(TimeInterval(currentPage * self.daySeconds))
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "eventDetailsCell")! as! EventDetailsTableViewCell
         
@@ -81,7 +104,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func pageSwitchedTo(index: Int) {
         updateWeatherViewFrom(index: index)
-        print("Page Switched")
         self.currentPage = index
         self.eventTableView.reloadData()
     }
@@ -97,32 +119,50 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }
         
-        let forecast = cityWeatherManager!.dailyForecasts[index]
-        let date = forecast.date
+        var forecast : DailyWeather?
+        if Calendar.current.isDate(cityWeatherManager!.dailyForecasts[0].date, inSameDayAs: Date()) {
+            forecast = cityWeatherManager!.dailyForecasts[index]
+        }
+        else {
+            if index != 0 {
+               forecast = cityWeatherManager!.dailyForecasts[index-1]
+            }
+        }
+        
+        let todaysDate = Date()
+        let date = todaysDate.addingTimeInterval(TimeInterval(daySeconds * index))
+
         let day = Calendar.current.component(Calendar.Component.day, from: date)
         let month = Calendar.current.component(Calendar.Component.month, from: date)
         let year = Calendar.current.component(Calendar.Component.year, from: date)
         let weekday = Calendar.current.component(Calendar.Component.weekday, from: date)
-        let todaysDate = Date()
+        
         
         if Calendar.current.isDate(date, inSameDayAs: todaysDate) {
-            self.weatherDetailsView.timeLabel.text = "Today"
+            self.weatherDetailsView.timeLabel.text = "Today (\(weekday))"
 
         }
         else {
-            self.weatherDetailsView.timeLabel.text = "\(day)/\(month)/\(year)"
+            self.weatherDetailsView.timeLabel.text = "\(weekday) \(day)/\(month)/\(year)"
 
         }
         
-        self.weatherDetailsView.minTempLabel.text = "\(Int(forecast.minTemp!))℃"
-        self.weatherDetailsView.maxTempLabel.text = "\(Int(forecast.maxTemp!))℃"
-        self.weatherDetailsView.chanceOfRainLabel.text = forecast.forecasts.first!.weatherType.rawValue
+        if forecast != nil {
+            self.weatherDetailsView.minTempLabel.text = "\(Int(forecast!.minTemp))℃"
+            self.weatherDetailsView.maxTempLabel.text = "\(Int(forecast!.maxTemp!))℃"
+            self.weatherDetailsView.chanceOfRainLabel.text = forecast!.forecasts.first!.weatherType.rawValue
+        }
+        else {
+            self.weatherDetailsView.minTempLabel.text = ""
+            self.weatherDetailsView.maxTempLabel.text = ""
+            self.weatherDetailsView.chanceOfRainLabel.text = ""
+        }
+        
     }
     
     // MARK: - Weather Nav Bar Delegate
     
     func todayButtonPressed() {
-        print("Today Button Pressed")
         updateWeatherViewFrom(index: 0)
         self.currentPage = 0
         self.backgroundImagePageVC?.jumptoPage(index: 0)
@@ -148,7 +188,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             let dest = nav.viewControllers.first as! EventDetailsViewController
             let cell = sender as! EventDetailsTableViewCell
             dest.event = cell.event
-            print(dest.event)
         }
         
     }

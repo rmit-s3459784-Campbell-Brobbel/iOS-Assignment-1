@@ -71,7 +71,10 @@ public class CityWeatherForecastManager {
         }
         
         let dailyForecastDictionary : NSDictionary = ["city" : self.location.city, "country" : self.location.country, "forecasts" : forecastDictionaries]
-        let dailyForecast = DailyWeather(dailyWeatherDictionary: dailyForecastDictionary)
-        self.dailyForecasts.append(dailyForecast)
+        if forecastDictionaries.count > 0 {
+            let dailyForecast = DailyWeather(dailyWeatherDictionary: dailyForecastDictionary)
+            self.dailyForecasts.append(dailyForecast)
+
+        }
     }
 }

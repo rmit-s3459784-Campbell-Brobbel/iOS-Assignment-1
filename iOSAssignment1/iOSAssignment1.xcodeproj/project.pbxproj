@@ -17,6 +17,11 @@
 		76133A981F4C6AF50037FAD5 /* WeatherNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76133A971F4C6AF50037FAD5 /* WeatherNavBar.swift */; };
 		76133A9A1F4D63440037FAD5 /* CityNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76133A991F4D63440037FAD5 /* CityNavBar.swift */; };
 		76133A9C1F4D6C9F0037FAD5 /* CityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76133A9B1F4D6C9F0037FAD5 /* CityTableViewCell.swift */; };
+		764488E21F7B9CA100D26CF7 /* AddEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764488E11F7B9CA100D26CF7 /* AddEventViewController.swift */; };
+		764488E41F7BA93200D26CF7 /* EventTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764488E31F7BA93200D26CF7 /* EventTextFieldTableViewCell.swift */; };
+		764488E61F7BCD1A00D26CF7 /* EventDatePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764488E51F7BCD1A00D26CF7 /* EventDatePickerTableViewCell.swift */; };
+		764488E81F7CC02300D26CF7 /* AddEventLocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764488E71F7CC02300D26CF7 /* AddEventLocationTableViewCell.swift */; };
+		764488EA1F7CCAFF00D26CF7 /* EventLocationSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764488E91F7CCAFF00D26CF7 /* EventLocationSearchViewController.swift */; };
 		765785F71F396115005B4766 /* Cells.xib in Resources */ = {isa = PBXBuildFile; fileRef = 765785F61F396115005B4766 /* Cells.xib */; };
 		765785F91F3968CE005B4766 /* BackgroundImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765785F81F3968CE005B4766 /* BackgroundImageViewController.swift */; };
 		765785FB1F3968EE005B4766 /* WeatherForEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765785FA1F3968EE005B4766 /* WeatherForEventViewController.swift */; };
@@ -72,6 +77,11 @@
 		76133A971F4C6AF50037FAD5 /* WeatherNavBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherNavBar.swift; sourceTree = "<group>"; };
 		76133A991F4D63440037FAD5 /* CityNavBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityNavBar.swift; sourceTree = "<group>"; };
 		76133A9B1F4D6C9F0037FAD5 /* CityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityTableViewCell.swift; sourceTree = "<group>"; };
+		764488E11F7B9CA100D26CF7 /* AddEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventViewController.swift; sourceTree = "<group>"; };
+		764488E31F7BA93200D26CF7 /* EventTextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTextFieldTableViewCell.swift; sourceTree = "<group>"; };
+		764488E51F7BCD1A00D26CF7 /* EventDatePickerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDatePickerTableViewCell.swift; sourceTree = "<group>"; };
+		764488E71F7CC02300D26CF7 /* AddEventLocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventLocationTableViewCell.swift; sourceTree = "<group>"; };
+		764488E91F7CCAFF00D26CF7 /* EventLocationSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventLocationSearchViewController.swift; sourceTree = "<group>"; };
 		765785F61F396115005B4766 /* Cells.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Cells.xib; sourceTree = "<group>"; };
 		765785F81F3968CE005B4766 /* BackgroundImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundImageViewController.swift; sourceTree = "<group>"; };
 		765785FA1F3968EE005B4766 /* WeatherForEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherForEventViewController.swift; sourceTree = "<group>"; };
@@ -160,17 +170,22 @@
 				766038FF1F3956D5006EB666 /* HomePageViewController.swift */,
 				766038FD1F395644006EB666 /* HomeViewController.swift */,
 				76F0BDF11F3A188E007450C6 /* MainNavigationViewController.swift */,
+				764488E11F7B9CA100D26CF7 /* AddEventViewController.swift */,
+				764488E51F7BCD1A00D26CF7 /* EventDatePickerTableViewCell.swift */,
+				764488E91F7CCAFF00D26CF7 /* EventLocationSearchViewController.swift */,
 				767A5B141F5163EA009C48D6 /* EventDetailsTableViewCell.swift */,
 				765785F81F3968CE005B4766 /* BackgroundImageViewController.swift */,
 				765785FA1F3968EE005B4766 /* WeatherForEventViewController.swift */,
 				767A5B161F51B7FA009C48D6 /* EventBasicDetailsTableViewCell.swift */,
+				764488E71F7CC02300D26CF7 /* AddEventLocationTableViewCell.swift */,
+				764488E31F7BA93200D26CF7 /* EventTextFieldTableViewCell.swift */,
 				76EEDBDC1F7212570016D012 /* EventLocationTableViewCell.swift */,
 				76060FF31F43DA16001DE11F /* EventDetailsViewController.swift */,
 				76E8B34C1F52756F007F0A4F /* EventWeatherDetailsViewController.swift */,
-				76E8B34E1F52888D007F0A4F /* WeatherImageTableViewCell.swift */,
 				765785FC1F396D4F005B4766 /* CitySelectorViewController.swift */,
 				76133A991F4D63440037FAD5 /* CityNavBar.swift */,
 				76133A971F4C6AF50037FAD5 /* WeatherNavBar.swift */,
+				76E8B34E1F52888D007F0A4F /* WeatherImageTableViewCell.swift */,
 				76F0BDEF1F39FD70007450C6 /* WeatherDetailsView.swift */,
 				76133A9B1F4D6C9F0037FAD5 /* CityTableViewCell.swift */,
 			);
@@ -385,10 +400,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				764488EA1F7CCAFF00D26CF7 /* EventLocationSearchViewController.swift in Sources */,
 				76133A981F4C6AF50037FAD5 /* WeatherNavBar.swift in Sources */,
 				766039001F3956D5006EB666 /* HomePageViewController.swift in Sources */,
 				769D3C821F1F5151001C4000 /* ViewController.swift in Sources */,
 				765785FD1F396D4F005B4766 /* CitySelectorViewController.swift in Sources */,
+				764488E61F7BCD1A00D26CF7 /* EventDatePickerTableViewCell.swift in Sources */,
 				765786021F399575005B4766 /* CityDetailsTableViewCell.swift in Sources */,
 				76060FF41F43DA16001DE11F /* EventDetailsViewController.swift in Sources */,
 				76F288141F430AFC0019E82E /* DailyWeatherEvent.swift in Sources */,
@@ -401,15 +418,18 @@
 				769D3C801F1F5151001C4000 /* AppDelegate.swift in Sources */,
 				76F288161F430B9B0019E82E /* DailyWeather.swift in Sources */,
 				76F2881A1F4310330019E82E /* WeatherManager.swift in Sources */,
+				764488E81F7CC02300D26CF7 /* AddEventLocationTableViewCell.swift in Sources */,
 				766038FE1F395644006EB666 /* HomeViewController.swift in Sources */,
 				76E8B34D1F52756F007F0A4F /* EventWeatherDetailsViewController.swift in Sources */,
 				76133A9C1F4D6C9F0037FAD5 /* CityTableViewCell.swift in Sources */,
 				765785F91F3968CE005B4766 /* BackgroundImageViewController.swift in Sources */,
 				76EEDBDD1F7212570016D012 /* EventLocationTableViewCell.swift in Sources */,
 				76F0BDF01F39FD70007450C6 /* WeatherDetailsView.swift in Sources */,
+				764488E41F7BA93200D26CF7 /* EventTextFieldTableViewCell.swift in Sources */,
 				76133A9A1F4D63440037FAD5 /* CityNavBar.swift in Sources */,
 				767A5B111F511EDB009C48D6 /* Event.swift in Sources */,
 				76060FF21F435287001DE11F /* CityWeatherForecastManager.swift in Sources */,
+				764488E21F7B9CA100D26CF7 /* AddEventViewController.swift in Sources */,
 				76E8B34F1F52888D007F0A4F /* WeatherImageTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

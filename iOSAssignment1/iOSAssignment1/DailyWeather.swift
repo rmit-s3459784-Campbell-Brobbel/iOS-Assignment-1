@@ -18,7 +18,7 @@ class DailyWeather {
     public private(set) var country : String
     
     init(dailyWeatherDictionary : NSDictionary) {
-      
+        print(dailyWeatherDictionary)
         self.city = dailyWeatherDictionary.value(forKey: "city") as! String
         self.country = dailyWeatherDictionary.value(forKey: "country") as! String
         let forecastArray = dailyWeatherDictionary.value(forKey: "forecasts") as! [NSDictionary]

@@ -26,11 +26,28 @@ class EventLocationTableViewCell: UITableViewCell {
     }
     
     public func updateLocationWith(eventDetails: Event) {
-        let regionRadius: CLLocationDistance = 1000
-        let location = CLLocation(latitude: 21.282778, longitude: -157.829444)
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
-                                                                      regionRadius * 2.0, regionRadius*2.0)
-        mapView.setRegion(coordinateRegion, animated: true)
+        let loc = eventDetails.location
+        let requestQuery = "\(loc.name!), \(loc.city!), \(loc.country!)"
+        let request = MKLocalSearchRequest()
+        request.naturalLanguageQuery = requestQuery
+        
+        let search = MKLocalSearch(request: request)
+        search.start(completionHandler: {response, error in
+            let mapItem = response!.mapItems.first!
+            let regionRadius: CLLocationDistance = 1000
+            let location = mapItem.placemark.location
+            let coordinateRegion = MKCoordinateRegionMakeWithDistance(location!.coordinate,
+                                                                    regionRadius * 2.0, regionRadius*2.0)
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = (location?.coordinate)!
+            annotation.title = mapItem.name!
+            self.mapView.addAnnotation(annotation)
+            self.mapView.setRegion(coordinateRegion, animated: true)
+            self.mapView.selectAnnotation(annotation, animated: true)
+        
+        })
+        
+        
         
         
     }

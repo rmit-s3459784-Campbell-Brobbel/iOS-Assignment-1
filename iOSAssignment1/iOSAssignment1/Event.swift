@@ -32,7 +32,6 @@ class Event {
     
     public func updateForecast() {
         self.forecast = WeatherManager.shared.forecastFor(location: self.location, closestTo: self.eventDateTime)
-        print("Event Forecast Is Now \(forecast?.toString() ?? "nil")")
     }
     
     

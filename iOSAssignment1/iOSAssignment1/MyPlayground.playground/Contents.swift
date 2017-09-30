@@ -1,13 +1,24 @@
 //: Playground - noun: a place where people can play
 
 import UIKit
+import CoreLocation
+import MapKit
+import XCPlayground
 
-let tomorrow = Date(timeIntervalSinceNow: 87000)
-let after = Date(timeIntervalSinceNow: 174000)
+XCPlaygroundPage.currentPage.needsIndefiniteExecution = true
+let geocoder = CLGeocoder()
 
+geocoder.geocodeAddressString("Ringwood Basketball Stadium, Ringwood, AU", completionHandler: { placemarks, error in
+    
+    print(placemarks!.first!)
+})
 
-let dayAfter1 = Date(timeIntervalSinceNow: 174000)
-let dayAfter2 = Date(timeIntervalSinceNow: 220000)
-let dayAfter3 = Date(timeIntervalSinceNow: 340000)
+let request = MKLocalSearchRequest()
+request.naturalLanguageQuery = "Knox Basketball Stadium, Boronia, AU"
 
-Calendar.current.component(.hour, from: dayAfter1)
+let search = MKLocalSearch(request: request)
+search.start(completionHandler: {response , error in
+    print(response!.mapItems.first)
+})
+let d1 = Date(timeIntervalSince1970: 0)
+let date = Date(timeIntervalSince1970: 86400000)

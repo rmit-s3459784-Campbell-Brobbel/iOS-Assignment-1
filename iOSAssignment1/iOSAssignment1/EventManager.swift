@@ -12,24 +12,41 @@ class EventManager {
     
     public static var shared : EventManager = EventManager()
     private(set) var events : [Event] = []
-    
+    private(set) var userLocations : [Location] = []
     init() {
-       createEvents()
-        for event in events {
-            print(event.forecast?.toString() ?? "Forecast Is Nil")
-        }
     }
     
-    private func createEvents() {
+    public func createEvents() {
         
         let tomorrow = Date(timeIntervalSinceNow: 87000)
         let dayAfter1 = Date(timeIntervalSinceNow: 174000)
         let dayAfter2 = Date(timeIntervalSinceNow: 220000)
         let dayAfter3 = Date(timeIntervalSinceNow: 340000)
 
-
-        let e1 = [Event(eventTitle: "Basketball Game", eventDateTime: Date(), location: Location(city: "Melbourne", country: "AU")), Event(eventTitle: "Poker", eventDateTime: Date(), location: Location(city: "Melbourne", country: "AU")),Event(eventTitle: "Work", eventDateTime: Date(), location: Location(city: "Melbourne", country: "AU")),Event(eventTitle: "Relax Time", eventDateTime: tomorrow, location: Location(city: "Melbourne", country: "AU")),Event(eventTitle: "Dinner", eventDateTime: tomorrow, location: Location(city: "Melbourne", country: "AU")), Event(eventTitle: "Basketball Game", eventDateTime: dayAfter1, location: Location(city: "Melbourne", country: "AU")), Event(eventTitle: "Treasure Hunt", eventDateTime: dayAfter1, location: Location(city: "Melbourne", country: "AU")),Event(eventTitle: "Movie With Friends", eventDateTime: dayAfter2, location: Location(city: "Melbourne", country: "AU")),Event(eventTitle: "Dinner At Parents", eventDateTime: dayAfter2, location: Location(city: "Melbourne", country: "AU")),Event(eventTitle: "Ballet Lesson", eventDateTime: dayAfter3, location: Location(city: "Melbourne", country: "AU"))]
-        self.events = e1
+        let ringwood = Location(name: "", city: "Ringwood", country: "AU")
+        let heathmont = Location(name: "", city: "Heathmont", country: "AU")
+        let southbank = Location(name: "", city: "Southbank", country: "AU")
+        let boronia = Location(name: "", city: "Boronia", country: "AU")
+        
+        WeatherManager.shared.addUserLocation(location: ringwood)
+        WeatherManager.shared.addUserLocation(location: heathmont)
+        WeatherManager.shared.addUserLocation(location: southbank)
+        WeatherManager.shared.addUserLocation(location: boronia)
+        
+        let e1 = Event(eventTitle: "Basketball Game", eventDateTime: Date(), location: Location(name: "Knox Basketball Stadium", city: "Boronia", country: "AU"))
+        let e2 = Event(eventTitle: "Poker", eventDateTime: Date(), location: Location(name: "Manhattan Hotel", city: "Ringwood", country: "AU"))
+        let e3 = Event(eventTitle: "Work", eventDateTime: Date(), location: Location(name: "Crown Casino", city: "Southbank", country: "AU"))
+        let e4 = Event(eventTitle: "Relax Time", eventDateTime: tomorrow, location: Location(name: "42 Jarma Road", city: "Heathmont", country: "AU"))
+        let e5 = Event(eventTitle: "Dinner", eventDateTime: tomorrow, location: Location(name: "42 Jarma Road", city: "Heathmont", country: "AU"))
+        let e6 =  Event(eventTitle: "Basketball Game", eventDateTime: dayAfter1, location: Location(name: "Knox   Basketball Stadium", city: "Boronia", country: "AU"))
+        let e7 = Event(eventTitle: "Treasure Hunt", eventDateTime: dayAfter1, location: Location(name: "Melbourne Central", city: "Melbourne", country: "AU"))
+        let e8 = Event(eventTitle: "Movie With Friends", eventDateTime: dayAfter3, location: Location(name: "Hoyts Eastland", city: "Ringwood", country: "AU"))
+        
+        let events = [e1,e2,e3,e4,e5,e6,e7,e8]
+        self.events = events
+        for event in self.events {
+            WeatherManager.shared.addUserLocation(location: event.location)
+        }
         
     }
     
@@ -38,20 +55,21 @@ class EventManager {
         var eventsForDay : [Event] = []
         
         for event in events {
-            
+                        
             if Calendar.current.isDate(event.eventDateTime, inSameDayAs: day){
                 eventsForDay.append(event)
-                
-                print("\(Calendar.current.component(.day, from: event.eventDateTime))")
-                print("\(Calendar.current.component(.day, from: day))")
-
+             
             }
         }
         
         return eventsForDay
     }
     
-    
+    public func updateAllEventForecasts() -> Void {
+        for event in self.events {
+            event.updateForecast()
+        }
+    }
     
     
 }

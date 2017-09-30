@@ -50,7 +50,6 @@ public class WeatherForecast {
         self.weatherType = WeatherType(rawValue: weatherDictionary.value(forKey: "main") as! String)!
         self.weatherDescription = weatherDictionary.value(forKey: "description") as! String
         
-        print(self.weatherType)
         switch self.weatherType {
         case .Clear:
             self.forecastImage = #imageLiteral(resourceName: "sunny")

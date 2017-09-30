@@ -1,4 +1,4 @@
-//
+    //
 //  EventDetailsViewController.swift
 //  iOSAssignment1
 //
@@ -25,7 +25,11 @@ class EventDetailsViewController: UIViewController, UITableViewDelegate, UITable
         super.didReceiveMemoryWarning()
     }
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        if event?.forecast != nil {
+            return 4
+
+        }
+        return 3
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -37,7 +41,7 @@ class EventDetailsViewController: UIViewController, UITableViewDelegate, UITable
         case 0:
             return 1
         case 1:
-            return 3
+            return 4
         case 2:
             return 1
         default:
@@ -54,18 +58,21 @@ class EventDetailsViewController: UIViewController, UITableViewDelegate, UITable
         }
     
         if indexPath.section == 1 {
-            if indexPath.row < 2 {
+            if indexPath.row < 3 {
+                print("\(self.event!.location)")
                 let cell = tableView.dequeueReusableCell(withIdentifier: "eventDetailCell")!
                 switch indexPath.row {
                 case 0:
+                    cell.textLabel?.text = "Name"
+                    cell.detailTextLabel?.text = "\(event!.location.name!)"
+                    
+                case 1:
                     cell.textLabel?.text = "City"
                     cell.detailTextLabel?.text = "\(event!.location.city!)"
                     
-                case 1:
+                case 2:
                     cell.textLabel?.text = "Country"
                     cell.detailTextLabel?.text = "\(event!.location.country!)"
-                    
-                    
                 default:
                     break
                 }
@@ -114,7 +121,7 @@ class EventDetailsViewController: UIViewController, UITableViewDelegate, UITable
         if indexPath.section == 0 {
             return 65
         }
-        else if indexPath.section == 1 && indexPath.row == 2{
+        else if indexPath.section == 1 && indexPath.row == 3{
             return 200
         }
         
