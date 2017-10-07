@@ -16,6 +16,7 @@ protocol HomePageDelegate {
 class HomePageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     
     var currentPageIndex = 0
+    
     lazy var homeViewControllers : [BackgroundImageViewController] = {
        
         return [self.VControllerInstance(name: "backgroundImageVC"), self.VControllerInstance(name: "backgroundImageVC"), self.VControllerInstance(name: "backgroundImageVC"), self.VControllerInstance(name: "backgroundImageVC"), self.VControllerInstance(name: "backgroundImageVC")]
@@ -27,6 +28,8 @@ class HomePageViewController: UIPageViewController, UIPageViewControllerDataSour
         super.viewDidLoad()
         self.delegate = self
         self.dataSource = self
+        
+        
         if let firstVC = homeViewControllers.first {
             self.setViewControllers([firstVC], direction: .forward, animated: true, completion: nil)
         }
@@ -50,10 +53,6 @@ class HomePageViewController: UIPageViewController, UIPageViewControllerDataSour
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        
-        print("Transition Completed \(completed)")
-        print("Previous View Controller Count: \(previousViewControllers.count)")
-        
         
         for index in 0...homeViewControllers.count-1{
             if (self.viewControllers?.first!.isEqual(homeViewControllers[index]))!{

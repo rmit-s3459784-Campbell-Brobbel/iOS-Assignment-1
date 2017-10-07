@@ -29,8 +29,8 @@ class EventDetailsTableViewCell: UITableViewCell {
 
     public func updateCellWithEvent(event : Event) {
         self.event = event
-        let hour = Calendar.current.component(.hour, from: event.eventDateTime)
-        let minute = Calendar.current.component(.minute, from: event.eventDateTime)
+        let hour = String(format: "%02d", Calendar.current.component(.hour, from: event.eventDateTime))
+        let minute = String(format: "%02d", Calendar.current.component(.minute, from: event.eventDateTime))
         self.timeLabel.text = "\(hour):\(minute)"
         self.eventTitleLabel.text = "\(event.eventTitle)"
         self.eventLocationLabel.text = "\(event.location.city!), \(event.location.country!)"

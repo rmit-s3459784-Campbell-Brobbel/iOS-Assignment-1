@@ -42,6 +42,12 @@
 		769D3C8A1F1F5151001C4000 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 769D3C881F1F5151001C4000 /* LaunchScreen.storyboard */; };
 		769D3C951F1F5151001C4000 /* iOSAssignment1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769D3C941F1F5151001C4000 /* iOSAssignment1Tests.swift */; };
 		769D3CA01F1F5151001C4000 /* iOSAssignment1UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769D3C9F1F1F5151001C4000 /* iOSAssignment1UITests.swift */; };
+		76C8964F1F86149C00BCAEAB /* EventModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 76C8964D1F86149C00BCAEAB /* EventModel.xcdatamodeld */; };
+		76C896641F8651A800BCAEAB /* EventLocation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C896601F8651A800BCAEAB /* EventLocation+CoreDataClass.swift */; };
+		76C896651F8651A800BCAEAB /* EventLocation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C896611F8651A800BCAEAB /* EventLocation+CoreDataProperties.swift */; };
+		76C896661F8651A800BCAEAB /* WeatherEvent+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C896621F8651A800BCAEAB /* WeatherEvent+CoreDataClass.swift */; };
+		76C896671F8651A800BCAEAB /* WeatherEvent+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C896631F8651A800BCAEAB /* WeatherEvent+CoreDataProperties.swift */; };
+		76C896691F87765200BCAEAB /* LoadingDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C896681F87765200BCAEAB /* LoadingDataView.swift */; };
 		76E8B34D1F52756F007F0A4F /* EventWeatherDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E8B34C1F52756F007F0A4F /* EventWeatherDetailsViewController.swift */; };
 		76E8B34F1F52888D007F0A4F /* WeatherImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E8B34E1F52888D007F0A4F /* WeatherImageTableViewCell.swift */; };
 		76EEDBDD1F7212570016D012 /* EventLocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EEDBDC1F7212570016D012 /* EventLocationTableViewCell.swift */; };
@@ -106,6 +112,12 @@
 		769D3C9B1F1F5151001C4000 /* iOSAssignment1UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSAssignment1UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		769D3C9F1F1F5151001C4000 /* iOSAssignment1UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSAssignment1UITests.swift; sourceTree = "<group>"; };
 		769D3CA11F1F5151001C4000 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		76C8964E1F86149C00BCAEAB /* EventModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EventModel.xcdatamodel; sourceTree = "<group>"; };
+		76C896601F8651A800BCAEAB /* EventLocation+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EventLocation+CoreDataClass.swift"; sourceTree = "<group>"; };
+		76C896611F8651A800BCAEAB /* EventLocation+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EventLocation+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		76C896621F8651A800BCAEAB /* WeatherEvent+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WeatherEvent+CoreDataClass.swift"; sourceTree = "<group>"; };
+		76C896631F8651A800BCAEAB /* WeatherEvent+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WeatherEvent+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		76C896681F87765200BCAEAB /* LoadingDataView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingDataView.swift; sourceTree = "<group>"; };
 		76E8B34C1F52756F007F0A4F /* EventWeatherDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventWeatherDetailsViewController.swift; sourceTree = "<group>"; };
 		76E8B34E1F52888D007F0A4F /* WeatherImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherImageTableViewCell.swift; sourceTree = "<group>"; };
 		76EEDBDC1F7212570016D012 /* EventLocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventLocationTableViewCell.swift; sourceTree = "<group>"; };
@@ -185,9 +197,11 @@
 				765785FC1F396D4F005B4766 /* CitySelectorViewController.swift */,
 				76133A991F4D63440037FAD5 /* CityNavBar.swift */,
 				76133A971F4C6AF50037FAD5 /* WeatherNavBar.swift */,
+				76C896681F87765200BCAEAB /* LoadingDataView.swift */,
 				76E8B34E1F52888D007F0A4F /* WeatherImageTableViewCell.swift */,
 				76F0BDEF1F39FD70007450C6 /* WeatherDetailsView.swift */,
 				76133A9B1F4D6C9F0037FAD5 /* CityTableViewCell.swift */,
+				76C8964D1F86149C00BCAEAB /* EventModel.xcdatamodeld */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -213,6 +227,10 @@
 		769D3C731F1F5151001C4000 = {
 			isa = PBXGroup;
 			children = (
+				76C896601F8651A800BCAEAB /* EventLocation+CoreDataClass.swift */,
+				76C896611F8651A800BCAEAB /* EventLocation+CoreDataProperties.swift */,
+				76C896621F8651A800BCAEAB /* WeatherEvent+CoreDataClass.swift */,
+				76C896631F8651A800BCAEAB /* WeatherEvent+CoreDataProperties.swift */,
 				769D3C7E1F1F5151001C4000 /* iOSAssignment1 */,
 				769D3C931F1F5151001C4000 /* iOSAssignment1Tests */,
 				769D3C9E1F1F5151001C4000 /* iOSAssignment1UITests */,
@@ -403,20 +421,26 @@
 				764488EA1F7CCAFF00D26CF7 /* EventLocationSearchViewController.swift in Sources */,
 				76133A981F4C6AF50037FAD5 /* WeatherNavBar.swift in Sources */,
 				766039001F3956D5006EB666 /* HomePageViewController.swift in Sources */,
+				76C8964F1F86149C00BCAEAB /* EventModel.xcdatamodeld in Sources */,
+				76C896661F8651A800BCAEAB /* WeatherEvent+CoreDataClass.swift in Sources */,
 				769D3C821F1F5151001C4000 /* ViewController.swift in Sources */,
 				765785FD1F396D4F005B4766 /* CitySelectorViewController.swift in Sources */,
 				764488E61F7BCD1A00D26CF7 /* EventDatePickerTableViewCell.swift in Sources */,
 				765786021F399575005B4766 /* CityDetailsTableViewCell.swift in Sources */,
 				76060FF41F43DA16001DE11F /* EventDetailsViewController.swift in Sources */,
 				76F288141F430AFC0019E82E /* DailyWeatherEvent.swift in Sources */,
+				76C896641F8651A800BCAEAB /* EventLocation+CoreDataClass.swift in Sources */,
 				767A5B171F51B7FA009C48D6 /* EventBasicDetailsTableViewCell.swift in Sources */,
 				765785FB1F3968EE005B4766 /* WeatherForEventViewController.swift in Sources */,
 				76F0BDF21F3A188E007450C6 /* MainNavigationViewController.swift in Sources */,
 				767A5B151F5163EA009C48D6 /* EventDetailsTableViewCell.swift in Sources */,
+				76C896651F8651A800BCAEAB /* EventLocation+CoreDataProperties.swift in Sources */,
 				76F288181F430C900019E82E /* WeatherForecast.swift in Sources */,
 				767A5B0F1F511E0D009C48D6 /* EventManager.swift in Sources */,
+				76C896691F87765200BCAEAB /* LoadingDataView.swift in Sources */,
 				769D3C801F1F5151001C4000 /* AppDelegate.swift in Sources */,
 				76F288161F430B9B0019E82E /* DailyWeather.swift in Sources */,
+				76C896671F8651A800BCAEAB /* WeatherEvent+CoreDataProperties.swift in Sources */,
 				76F2881A1F4310330019E82E /* WeatherManager.swift in Sources */,
 				764488E81F7CC02300D26CF7 /* AddEventLocationTableViewCell.swift in Sources */,
 				766038FE1F395644006EB666 /* HomeViewController.swift in Sources */,
@@ -707,6 +731,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		76C8964D1F86149C00BCAEAB /* EventModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				76C8964E1F86149C00BCAEAB /* EventModel.xcdatamodel */,
+			);
+			currentVersion = 76C8964E1F86149C00BCAEAB /* EventModel.xcdatamodel */;
+			path = EventModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 769D3C741F1F5151001C4000 /* Project object */;
 }

@@ -41,7 +41,7 @@ class EventDetailsViewController: UIViewController, UITableViewDelegate, UITable
         case 0:
             return 1
         case 1:
-            return 4
+            return 5
         case 2:
             return 1
         default:
@@ -58,7 +58,7 @@ class EventDetailsViewController: UIViewController, UITableViewDelegate, UITable
         }
     
         if indexPath.section == 1 {
-            if indexPath.row < 3 {
+            if indexPath.row < 4 {
                 print("\(self.event!.location)")
                 let cell = tableView.dequeueReusableCell(withIdentifier: "eventDetailCell")!
                 switch indexPath.row {
@@ -69,8 +69,11 @@ class EventDetailsViewController: UIViewController, UITableViewDelegate, UITable
                 case 1:
                     cell.textLabel?.text = "City"
                     cell.detailTextLabel?.text = "\(event!.location.city!)"
-                    
+                  
                 case 2:
+                    cell.textLabel?.text = "Address"
+                    cell.detailTextLabel?.text = "\(event!.location.address!)"
+                case 3:
                     cell.textLabel?.text = "Country"
                     cell.detailTextLabel?.text = "\(event!.location.country!)"
                 default:
@@ -121,7 +124,7 @@ class EventDetailsViewController: UIViewController, UITableViewDelegate, UITable
         if indexPath.section == 0 {
             return 65
         }
-        else if indexPath.section == 1 && indexPath.row == 3{
+        else if indexPath.section == 1 && indexPath.row == 4{
             return 200
         }
         

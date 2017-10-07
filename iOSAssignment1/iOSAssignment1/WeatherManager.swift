@@ -17,7 +17,7 @@ class WeatherManager {
     public static var shared : WeatherManager = WeatherManager()
     private var lastUpdated : Date?
     
-    public private(set) var cities : [Location] = [Location.init(name: "", city: "Melbourne", country: "AU"), Location.init(name: "", city: "Sydney", country: "AU"), Location.init(name: "", city: "Adelaide", country: "AU"), Location.init(name: "", city: "Perth", country: "AU"), Location.init(name: "", city: "Hobart", country: "AU"), Location.init(name: "", city: "Brisbane", country: "AU")]
+    public private(set) var cities : [Location] = [Location.init(name: "", address: "", city: "Melbourne", country: "AU"), Location.init(name: "",  address: "", city: "Sydney", country: "AU"), Location.init(name: "",  address: "", city: "Adelaide", country: "AU"), Location.init(name: "", address: "", city: "Perth", country: "AU"), Location.init(name: "",  address: "", city: "Hobart", country: "AU"), Location.init(name: "",  address: "", city: "Brisbane", country: "AU")]
     
     
     public private(set) var userCities : [Location] = []
@@ -28,15 +28,53 @@ class WeatherManager {
        
     }
     
-    public func addUserLocation(location: Location) {
+    public func addUserLocation(location: Location, completion: () -> Void) {
+        
+        for majorCity in self.cities {
+            if location.city == majorCity.city && location.country == majorCity.country {
+                completion()
+                return
+            }
+        }
         
         for userLocation in self.userCities {
             if location.city == userLocation.city && location.country == userLocation.country {
+                // Match is found. No need to download extra weather data.
+                completion()
                 return
             }
         }
         self.userCities.append(location)
-        
+        let cityUrl = location.city.replacingOccurrences(of: " ", with: "+")
+        let urlString = "\(weatherAPIUrlString)q=\(cityUrl),\(location.country!)&units=metric&appid=\(self.appID)"
+        let url = URL(string: urlString)
+        let sem = DispatchSemaphore(value: 0)
+        let task = URLSession.shared.dataTask(with: url!) {data, response, error in
+            
+            if error != nil {
+                
+            }
+            else {
+                
+                do {
+                    let cityWeatherDictionary = try JSONSerialization.jsonObject(with: data!, options: []) as! NSDictionary
+                    
+                    let cityWeatherManager = CityWeatherForecastManager(cityName: location.city, cityWeatherForecastDictionary: cityWeatherDictionary)
+                    
+                    self.cityWeatherForecasts.append(cityWeatherManager)
+                    sem.signal()
+                    
+                }
+                catch let error {
+                    print(error.localizedDescription)
+                }
+                
+            }
+            
+        }
+        task.resume()
+        sem.wait()
+        completion()
     }
     
     // Download the forecasts for all the cities.
@@ -58,7 +96,7 @@ class WeatherManager {
                     do {
                         let cityWeatherDictionary = try JSONSerialization.jsonObject(with: data!, options: []) as! NSDictionary
                         
-                        let cityWeatherManager = CityWeatherForecastManager(cityWeatherForecastDictionary: cityWeatherDictionary)
+                        let cityWeatherManager = CityWeatherForecastManager(cityName: city.city, cityWeatherForecastDictionary: cityWeatherDictionary)
                         
                         self.cityWeatherForecasts.append(cityWeatherManager)
                         sem.signal()
@@ -79,7 +117,8 @@ class WeatherManager {
         
         for city in self.userCities {
             print("\(city.city)")
-            let urlString = "\(weatherAPIUrlString)q=\(city.city!),\(city.country!)&units=metric&appid=\(self.appID)"
+            let urlString = "\(weatherAPIUrlString)q=\(city.city!.replacingOccurrences(of: " ", with: "+")),\(city.country!)&units=metric&appid=\(self.appID)"
+            print(urlString)
             let url = URL(string: urlString)
             let sem = DispatchSemaphore(value: 0)
             let task = URLSession.shared.dataTask(with: url!) {data, response, error in
@@ -92,7 +131,7 @@ class WeatherManager {
                     do {
                         let cityWeatherDictionary = try JSONSerialization.jsonObject(with: data!, options: []) as! NSDictionary
                         
-                        let cityWeatherManager = CityWeatherForecastManager(cityWeatherForecastDictionary: cityWeatherDictionary)
+                        let cityWeatherManager = CityWeatherForecastManager(cityName: city.city, cityWeatherForecastDictionary: cityWeatherDictionary)
                         
                         self.cityWeatherForecasts.append(cityWeatherManager)
                         sem.signal()
@@ -134,7 +173,6 @@ class WeatherManager {
         }
         
         for city in self.userCities {
-            
             if city.city == location.city && city.country == location.country {
                 print("USer City Match")
                 cityMatch = city
@@ -216,6 +254,7 @@ class WeatherManager {
 
 public struct Location {
     var name: String!
+    var address: String!
     var city : String!
     var country : String!
 }

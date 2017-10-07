@@ -21,7 +21,6 @@ class WeatherNavBar: UIVisualEffectView {
     @IBOutlet weak var dateLabel : UILabel!
     @IBOutlet weak var cityButton : UIButton!
 
-    
     var delegate : WeatherNavBarDelegate?
     
     @IBAction func cityButtonPressed(sender: Any) {

@@ -8,11 +8,10 @@
 
 import UIKit
 
-class EventWeatherDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CityNavBarDelegate {
+class EventWeatherDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
    
     var weatherForecast : WeatherForecast?
     
-    @IBOutlet weak var navBar : CityNavBar!
     @IBOutlet weak var tableView: UITableView!
 
    
@@ -20,7 +19,6 @@ class EventWeatherDetailsViewController: UIViewController, UITableViewDelegate, 
         super.viewDidLoad()
         self.tableView.dataSource = self
         self.tableView.delegate = self
-        self.navBar.delegate = self
         // Do any additional setup after loading the view.
         
     }

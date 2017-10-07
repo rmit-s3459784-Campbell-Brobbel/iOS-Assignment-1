@@ -14,11 +14,10 @@ public class CityWeatherForecastManager {
     
     var dailyForecasts : [DailyWeather] = []
     
-    init(cityWeatherForecastDictionary : NSDictionary) {
+    init(cityName: String, cityWeatherForecastDictionary : NSDictionary) {
         let locationDictionary = cityWeatherForecastDictionary.value(forKey: "city") as! NSDictionary
-        self.location.city = locationDictionary.value(forKey: "name") as! String
+        self.location.city = cityName
         self.location.country = locationDictionary.value(forKey: "country") as! String
-        
         
         let dailyForecastList = cityWeatherForecastDictionary.value(forKey: "list") as! NSArray
         createDailyForecasts(dailyForecastList: dailyForecastList)
@@ -66,7 +65,6 @@ public class CityWeatherForecastManager {
                 }
                 
             }
-            
             
         }
         

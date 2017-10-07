@@ -17,9 +17,9 @@ class Event {
     
     
     init() {
-        self.eventTitle = ""
+        self.eventTitle = "Blank Event"
         self.eventDateTime = Date()
-        self.location = Location()
+        self.location = Location(name: "No Name",  address: "No Address", city: "No Name", country: "AU")
         updateForecast()
     }
     
