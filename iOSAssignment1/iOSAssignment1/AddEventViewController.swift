@@ -9,15 +9,21 @@
 import UIKit
 import MapKit
 
+/// Tells a delegate object about an event being added.
 protocol AddEventDelegate {
     func eventAdded(event : Event)
 }
 class AddEventViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MapSearchProtocol {
 
+    // MARK: - Variables/IBOutlets
+    
     var mapItem : MKMapItem?
     var delegate : AddEventDelegate?
     var sectionTitles : [String] = ["Title", "Date", "Location"]
+    
     @IBOutlet weak var tableView : UITableView!
+    
+    // MARK: - IBActions
     
     @IBAction func dismissView() {
         dismiss(animated: true, completion: nil)
@@ -67,27 +73,24 @@ class AddEventViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
+    // MARK: - View Methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.tableFooterView = UIView(frame: .zero)
         self.tableView.keyboardDismissMode = .onDrag
-        // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     //MARK: - Table View Data Source/Delegate
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return sectionTitles.count
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         if section == 2 && self.mapItem != nil {
             return 2
         }
@@ -113,8 +116,6 @@ class AddEventViewController: UIViewController, UITableViewDataSource, UITableVi
             let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell")!
             cell.textLabel?.text = mapItem?.name ?? "No Location"
             cell.detailTextLabel?.text = mapItem?.placemark.title ?? ""
-            
-            
             
             return cell
         }
@@ -151,16 +152,12 @@ class AddEventViewController: UIViewController, UITableViewDataSource, UITableVi
         
         return 40
     }
-    func mapItemSelected(mapItem: MKMapItem) {
-        print("Map Item Selected")
-        print(mapItem.name ?? "No Name")
-        self.mapItem = mapItem
-        self.tableView.reloadData()
-    }
+   
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: true)
     }
+    
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
@@ -170,7 +167,6 @@ class AddEventViewController: UIViewController, UITableViewDataSource, UITableVi
         label.textColor = .white
         label.font = UIFont(name: "Avenir", size: 25)
         label.center.y = view.center.y
-        
         view.addSubview(label)
         view.backgroundColor = .clear
         return view
@@ -181,6 +177,7 @@ class AddEventViewController: UIViewController, UITableViewDataSource, UITableVi
         view.backgroundColor = .clear
         return view
     }
+    
     //MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -189,6 +186,14 @@ class AddEventViewController: UIViewController, UITableViewDataSource, UITableVi
             let dest = segue.destination as! EventLocationSearchViewController
             dest.delegate = self
         }
+    }
+    
+    // MARK: - MapSearchProtocol Methods
+    
+    
+    func mapItemSelected(mapItem: MKMapItem) {
+        self.mapItem = mapItem
+        self.tableView.reloadData()
     }
     
     //MARK: - Other Functions

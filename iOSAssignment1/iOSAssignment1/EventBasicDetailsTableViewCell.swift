@@ -10,8 +10,11 @@ import UIKit
 
 class EventBasicDetailsTableViewCell: UITableViewCell {
     
+    /// Event title label.
     @IBOutlet weak var titleLabel : UILabel!
+    /// Event Time label.
     @IBOutlet weak var timeLabel : UILabel!
+    /// Event Location Details Label
     @IBOutlet weak var locationLabel: UILabel!
     
     override func awakeFromNib() {
@@ -25,6 +28,7 @@ class EventBasicDetailsTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    /// Updates the cell with details.
     public func updateCell(title: String, time: String, location: String) {
         self.titleLabel.text = title
         self.timeLabel.text = time

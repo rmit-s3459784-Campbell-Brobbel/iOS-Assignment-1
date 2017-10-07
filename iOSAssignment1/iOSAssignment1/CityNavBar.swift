@@ -13,11 +13,16 @@ protocol CityNavBarDelegate {
 }
 
 class CityNavBar: UIVisualEffectView {
-
+    
+    /// Button for cancelling a city selection.
     @IBOutlet weak var cancelButton : UIButton!
     
+    /// reference to a CityNavBarDelegate Object.
     var delegate : CityNavBarDelegate?
     
+    // MARK:- IBActions
+    
+    /// Sends a method to the delegate to say that the cancel button was pressed.
     @IBAction func cancelPressed(sender: Any) {
         self.delegate?.cancelButtonPressed()
         

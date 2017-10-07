@@ -14,7 +14,7 @@ class EventWeatherDetailsViewController: UIViewController, UITableViewDelegate, 
     
     @IBOutlet weak var tableView: UITableView!
 
-   
+   // MARK: - View Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.dataSource = self
@@ -22,12 +22,8 @@ class EventWeatherDetailsViewController: UIViewController, UITableViewDelegate, 
         // Do any additional setup after loading the view.
         
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
+    // MARK: - UITableViewDataSource/Delegate Methods
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.row == 0 {
@@ -72,8 +68,6 @@ class EventWeatherDetailsViewController: UIViewController, UITableViewDelegate, 
         }
         return 45   
     }
-    func cancelButtonPressed() {
-        self.dismiss(animated: true, completion: nil)
-    }
+  
     
 }

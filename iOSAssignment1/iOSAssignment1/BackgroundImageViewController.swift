@@ -10,9 +10,12 @@ import UIKit
 
 class BackgroundImageViewController: UIViewController {
     
+    
+    // MARK: - IBOutlets/Variables
     var weatherType : WeatherType?
     @IBOutlet weak var imageView : UIImageView!
     
+    // MARK: - View Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Background Image Loaded")
@@ -24,11 +27,6 @@ class BackgroundImageViewController: UIViewController {
         }
         // Do any additional setup after loading the view.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         print("Background Will Appear")
@@ -36,6 +34,8 @@ class BackgroundImageViewController: UIViewController {
         
     }
     
+    // MARK: - Other Functions
+    /// Updates the image based on weather type.
     func updateBackgroundImage() {
         if self.weatherType == .Rain  || self.weatherType == .Clouds {
             self.imageView.image = #imageLiteral(resourceName: "Storm")
@@ -44,14 +44,5 @@ class BackgroundImageViewController: UIViewController {
             self.imageView.image = #imageLiteral(resourceName: "Sunny Day")
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

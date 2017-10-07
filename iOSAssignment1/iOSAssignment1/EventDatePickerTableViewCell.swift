@@ -10,6 +10,7 @@ import UIKit
 
 class EventDatePickerTableViewCell: UITableViewCell {
 
+    /// Date picker for selecting event date.
     @IBOutlet weak var datePicker : UIDatePicker!
     
     override func awakeFromNib() {

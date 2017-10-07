@@ -8,18 +8,18 @@
 
 import Foundation
 
-// A class used to deal with the downloading and managing of all forecasts for a set of given locations.
-
+/// A class used to deal with the downloading and managing of all forecasts for a set of given locations.
 class WeatherManager {
     
+    /// Prefix String for the weather API address.
     private let weatherAPIUrlString = "https://api.openweathermap.org/data/2.5/forecast?"
+    /// API Key needed for downloading weather data.
     private let appID = "20b7b621ea367841bb406e0d35b236db"
+    /// A singleton object used for accessing all weather forecasts from every view controller.
     public static var shared : WeatherManager = WeatherManager()
-    private var lastUpdated : Date?
-    
+    /// Major Cities In Australia
     public private(set) var cities : [Location] = [Location.init(name: "", address: "", city: "Melbourne", country: "AU"), Location.init(name: "",  address: "", city: "Sydney", country: "AU"), Location.init(name: "",  address: "", city: "Adelaide", country: "AU"), Location.init(name: "", address: "", city: "Perth", country: "AU"), Location.init(name: "",  address: "", city: "Hobart", country: "AU"), Location.init(name: "",  address: "", city: "Brisbane", country: "AU")]
-    
-    
+    /// An array of cities created by the user.
     public private(set) var userCities : [Location] = []
     
     var cityWeatherForecasts : [CityWeatherForecastManager] = []
@@ -28,6 +28,7 @@ class WeatherManager {
        
     }
     
+    /// Adds a single user location and downloads the weather forecasts associated with that location.
     public func addUserLocation(location: Location, completion: () -> Void) {
         
         for majorCity in self.cities {
@@ -77,7 +78,7 @@ class WeatherManager {
         completion()
     }
     
-    // Download the forecasts for all the cities.
+    // Downloads the weather info for all of the cities.
     public func updateAllCities(completion : () -> Void) {
         
         for city in cities {
@@ -105,7 +106,6 @@ class WeatherManager {
                     catch let error {
                         print(error.localizedDescription)
                     }
-                    
                 }
                 
             }
@@ -113,7 +113,6 @@ class WeatherManager {
             sem.wait()
 
         }
-        print("User Cities Count: \(self.userCities.count)")
         
         for city in self.userCities {
             print("\(city.city)")
@@ -149,15 +148,10 @@ class WeatherManager {
             
             
     }
-        print("Completion")
         completion()
     }
-    // Download and insert forecasts for a new city.
-    public func addCity(location : Location) {
-        
-    }
     
-    // Returns all forecasts for a given location
+    /// Returns all forecasts for a given location
     public func forecastsFor(location : Location) -> [DailyWeather]? {
         
         var cityMatch : Location?
@@ -166,8 +160,6 @@ class WeatherManager {
             
             if city.city == location.city && city.country == location.country {
                 cityMatch = city
-                print("Major City Match")
-
                 break
             }
         }
@@ -192,7 +184,7 @@ class WeatherManager {
         return nil
     }
     
-    // Returns a specific forecast for a location at a given time
+    /// Get the forecast for a location at a specific time if there exist forecasts for the day of the date.
     public func forecastFor(location : Location, closestTo time : Date) -> WeatherForecast? {
         print("Forecast For Location: \(location.city)")
         let forecasts = forecastsFor(location: location)
@@ -228,16 +220,18 @@ class WeatherManager {
         return nil
     }
     
+    /// Calculates minutes between 2 dates.
     public func minutesBetween(date1: Date, date2 : Date) -> Int {
         return abs(Calendar.current.dateComponents([.minute], from: date1, to: date2).minute!)
     }
     
     
-    // Determines if the weather data for a given location already exists 
+    /// Determines if the weather data for a given location already exists
     public func weatherDataIsKnownFor(location : Location) -> Bool {
         return false
     }
     
+    /// Returns an array of dates the the weather manager knows about.
     public func datesWeatherIsKnownFor() -> [Date] {
         
         var dates : [Date] = []
@@ -252,6 +246,7 @@ class WeatherManager {
     }
 }
 
+/// Structure used for holding information about a location.
 public struct Location {
     var name: String!
     var address: String!

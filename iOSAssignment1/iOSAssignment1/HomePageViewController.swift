@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Passes information about page switches to the delegate object.
 protocol HomePageDelegate {
     
     func pageSwitchedTo(index : Int)
@@ -15,8 +16,11 @@ protocol HomePageDelegate {
 
 class HomePageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     
+    // MARK: - IBOutlets/Variables
+    /// The users current page.
     var currentPageIndex = 0
     
+    /// An array of view controllers that the page view controller switches between.
     lazy var homeViewControllers : [BackgroundImageViewController] = {
        
         return [self.VControllerInstance(name: "backgroundImageVC"), self.VControllerInstance(name: "backgroundImageVC"), self.VControllerInstance(name: "backgroundImageVC"), self.VControllerInstance(name: "backgroundImageVC"), self.VControllerInstance(name: "backgroundImageVC")]
@@ -24,28 +28,19 @@ class HomePageViewController: UIPageViewController, UIPageViewControllerDataSour
     
     var homeDelegate : HomePageDelegate?
     
+    // MARK: - View Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
         self.dataSource = self
-        
-        
         if let firstVC = homeViewControllers.first {
             self.setViewControllers([firstVC], direction: .forward, animated: true, completion: nil)
         }
-        
         self.navigationController?.viewControllers[1].automaticallyAdjustsScrollViewInsets = false
-        
-        // Do any additional setup after loading the view.
-    }
+        }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
-    
-    // MARK: - Page View Controller Data Source
+    // MARK: - PageViewControllerDataSource/Delegate
     
     func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
         print("Will transition")
@@ -103,21 +98,15 @@ class HomePageViewController: UIPageViewController, UIPageViewControllerDataSour
         
     }
     
-    
-    
-    // MARK: - Page View Controller Delegate
-    
-    
-    
     // MARK: - Other Methods
     
-    //Returns an instance of a UIViewController that has been drawn up using Storyboard.
+    /// Returns an instance of a UIViewController that has been drawn up using Storyboard.
     private func VControllerInstance(name: String) -> BackgroundImageViewController {
         
         return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: name) as! BackgroundImageViewController
     }
     
-    
+    /// Returns the user to a page based on an index number.
     func jumptoPage(index : Int) {
         
         let vc = self.homeViewControllers[index]
@@ -152,6 +141,4 @@ class HomePageViewController: UIPageViewController, UIPageViewControllerDataSour
         }
         self.currentPageIndex = index
     }
-    
-
 }

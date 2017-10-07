@@ -8,11 +8,16 @@
 
 import Foundation
 
+/// Contains information regarding a user's specific event details.
 class Event {
     
+    /// Title of the event
     public private(set) var eventTitle : String
+    /// Date/Time of the event
     public private(set) var eventDateTime : Date
+    /// Location of the event
     public private(set) var location : Location
+    /// Forecast for the event. This may not be available for download.
     public var forecast : WeatherForecast?
     
     
@@ -30,6 +35,7 @@ class Event {
         updateForecast()
     }
     
+    /// Updates the forecast for the event from the WeatherManager.
     public func updateForecast() {
         self.forecast = WeatherManager.shared.forecastFor(location: self.location, closestTo: self.eventDateTime)
     }

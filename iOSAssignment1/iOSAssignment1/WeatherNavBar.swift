@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Notifies delegate objects about interactions with the WeatherNavBar
 protocol WeatherNavBarDelegate {
     func todayButtonPressed()
     func cityButtonPressed()
@@ -16,12 +17,16 @@ protocol WeatherNavBarDelegate {
 
 class WeatherNavBar: UIVisualEffectView {
 
+    // MARK: - IBOutlets
+
     @IBOutlet weak var todayButton: UIButton!
-    
     @IBOutlet weak var dateLabel : UILabel!
     @IBOutlet weak var cityButton : UIButton!
 
     var delegate : WeatherNavBarDelegate?
+    
+    
+    // MARK: - WeatherNavBarDelegateMethods
     
     @IBAction func cityButtonPressed(sender: Any) {
         self.delegate?.cityButtonPressed()
@@ -31,14 +36,14 @@ class WeatherNavBar: UIVisualEffectView {
         self.delegate?.todayButtonPressed()
     }
     
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
+    // MARK: - View Methods
+    
     override func draw(_ rect: CGRect) {
         let date = Date()
         let day = Calendar.current.component(Calendar.Component.day, from: date)
         let month = Calendar.current.component(Calendar.Component.month, from: date)
         let year = Calendar.current.component(Calendar.Component.year, from: date)
-
+        self.cityButton.titleLabel?.textAlignment = .center
         self.dateLabel.text = "\(day)/\(month)/\(year)"
         
     }

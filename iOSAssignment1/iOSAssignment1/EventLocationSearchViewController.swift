@@ -14,11 +14,14 @@ protocol MapSearchProtocol {
 }
 class EventLocationSearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
 
+    //MARK: - Variables/IBOutlets
+    
     @IBOutlet weak var searchBar : UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     var array : [MKMapItem] = []
     var delegate : MapSearchProtocol?
     
+    // MARK: - View Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -31,40 +34,23 @@ class EventLocationSearchViewController: UIViewController, UITableViewDataSource
         textFieldInsideSearchBar?.textColor = .white
         
     }
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        
-    }
-    
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        print("Did Begin Editing")
-        
-    }
-    
+  
+    // MARK: - UISearchBarDelegate Methods
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print("Search Button Clicked")
         let query = searchBar.text
         let request = MKLocalSearchRequest()
         request.naturalLanguageQuery = query!
         
         let search = MKLocalSearch(request: request)
         search.start(completionHandler: {response, error in
-            
-            
             if response == nil {
-                print("Response is nil")
                 self.array = []
-                
             }
             else {
-                print("Response is not nil")
-                
                 self.array = (response?.mapItems)!
-                
             }
             self.tableView.reloadData()
         })
-        
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -78,7 +64,6 @@ class EventLocationSearchViewController: UIViewController, UITableViewDataSource
             if response == nil {
                 print("Response is nil")
                 self.array = []
-
             }
             else {
                 print("Response is not nil")
@@ -89,11 +74,8 @@ class EventLocationSearchViewController: UIViewController, UITableViewDataSource
             self.tableView.reloadData()
         })
     }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
+    // MARK: - UITableViewDataSource/Delegate Methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.array.count
     }
@@ -113,14 +95,5 @@ class EventLocationSearchViewController: UIViewController, UITableViewDataSource
         self.navigationController?.popToRootViewController(animated: true)
         
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

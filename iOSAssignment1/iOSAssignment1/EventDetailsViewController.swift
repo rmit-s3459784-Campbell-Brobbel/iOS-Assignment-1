@@ -11,23 +11,24 @@ import MapKit
 
 class EventDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CityNavBarDelegate {
     
+    // MARK: - Variables/IBOutlets
     var event : Event?
     var sectionTitles : [String] = ["Location", "Time", "Other Details"]
     
     @IBOutlet weak var eventDetailsTableView: UITableView!
+    
+    // MARK: - View Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         self.eventDetailsTableView.dataSource = self
         self.eventDetailsTableView.delegate = self
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
+
+    // MARK: - Table View Delegate/DataSource Methods
     func numberOfSections(in tableView: UITableView) -> Int {
         if event?.forecast != nil {
             return 4
-
         }
         return 3
     }
@@ -36,7 +37,6 @@ class EventDetailsViewController: UIViewController, UITableViewDelegate, UITable
         return "l"
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         switch section {
         case 0:
             return 1
@@ -47,8 +47,8 @@ class EventDetailsViewController: UIViewController, UITableViewDelegate, UITable
         default:
             return 1
         }
-        
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.section == 0 {
@@ -86,7 +86,6 @@ class EventDetailsViewController: UIViewController, UITableViewDelegate, UITable
                 cell.updateLocationWith(eventDetails: self.event!)
                 return cell
             }
-            
         }
         
         else if indexPath.section == 2 {
@@ -115,10 +114,7 @@ class EventDetailsViewController: UIViewController, UITableViewDelegate, UITable
             return cell
 
         }
-        
-        
     }
-    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
@@ -147,18 +143,6 @@ class EventDetailsViewController: UIViewController, UITableViewDelegate, UITable
         return view
     }
     
-    
-    @IBAction func cancelButtonPressed() {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "eventWeatherSegue" {
-            let dest = segue.destination as! EventWeatherDetailsViewController
-            dest.weatherForecast = self.event?.forecast!
-        }
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -172,4 +156,18 @@ class EventDetailsViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return "nothing"
     }
+   
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "eventWeatherSegue" {
+            let dest = segue.destination as! EventWeatherDetailsViewController
+            dest.weatherForecast = self.event?.forecast!
+        }
+    }
+    
+    // MARK: - CityNavBarDelegate Methods
+    @IBAction func cancelButtonPressed() {
+        self.dismiss(animated: true, completion: nil)
+    }
+
 }

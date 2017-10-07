@@ -11,6 +11,7 @@ import MapKit
 
 class EventLocationTableViewCell: UITableViewCell {
 
+    /// Map View for displaying Event Location
     @IBOutlet weak var mapView: MKMapView!
     
     override func awakeFromNib() {
@@ -25,6 +26,7 @@ class EventLocationTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    /// Update the location with the details of an Event
     public func updateLocationWith(eventDetails: Event) {
         let loc = eventDetails.location
         let requestQuery = "\(loc.address!), \(loc.city!), \(loc.country!)"
@@ -49,20 +51,17 @@ class EventLocationTableViewCell: UITableViewCell {
         
     }
     
+    /// Update the cell map with a MKMapItem
     public func updateLocationWith(mapItem: MKMapItem) {
-        
             let regionRadius: CLLocationDistance = 1000
             let location = mapItem.placemark.location
-            let coordinateRegion = MKCoordinateRegionMakeWithDistance(location!.coordinate,
-                                                                      regionRadius * 2.0, regionRadius*2.0)
+            let coordinateRegion = MKCoordinateRegionMakeWithDistance(location!.coordinate,regionRadius * 2.0, regionRadius*2.0)
             let annotation = MKPointAnnotation()
             annotation.coordinate = (location?.coordinate)!
             annotation.title = mapItem.name!
             self.mapView.addAnnotation(annotation)
             self.mapView.setRegion(coordinateRegion, animated: true)
             self.mapView.selectAnnotation(annotation, animated: true)
-            
-        
     }
 
 }

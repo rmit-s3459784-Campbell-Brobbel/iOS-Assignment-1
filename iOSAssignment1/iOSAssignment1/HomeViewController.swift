@@ -10,7 +10,11 @@ import UIKit
 import CoreData
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, HomePageDelegate, WeatherNavBarDelegate, UIPopoverPresentationControllerDelegate, CitySelector, AddEventDelegate {
 
-    var currentCity : Location = WeatherManager.shared.cities.first!
+    // MARK: - Variables/IBOutlets
+    /// The city this view controller will be displaying information about.
+    var currentCity : Location!
+    
+    /// Today's date
     let currentDate : Date = Date()
     
     /// Amount of seconds per day
@@ -18,24 +22,27 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet weak var weatherDetailsView: WeatherDetailsView!
     @IBOutlet weak var eventTableView: UITableView!
-    
     @IBOutlet weak var backgroundPageVCView: UIView!
     @IBOutlet weak var navBar: WeatherNavBar!
     @IBOutlet weak var loadingView : LoadingDataView!
+    @IBOutlet weak var emptyTableView: UIView!
     
+    /// The current page the user is on
     var currentPage = 0;
+    
+    // The page view controller that holds the background images.
     var backgroundImagePageVC : HomePageViewController?
     
+    
+    // MARK: - View Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         UIApplication.shared.beginIgnoringInteractionEvents()
-        testCoreData()
-        
+        self.currentCity = WeatherManager.shared.cities.first!
         self.eventTableView.dataSource = self
         self.eventTableView.delegate = self
         self.eventTableView.tableFooterView = UIView(frame: .zero)
         self.weatherDetailsView.isUserInteractionEnabled = false
-        
         self.navBar.delegate = self
         self.backgroundImagePageVC = self.childViewControllers[0] as? HomePageViewController
         self.backgroundImagePageVC?.homeDelegate = self
@@ -43,56 +50,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.updateLoadScreenConstraints()
         self.loadingView.startAnimatingIndicator()
         UIApplication.shared.statusBarStyle = .lightContent
-        
     }
-    
-    func testCoreData() {
-        print("TESTING CORE DATA ===============================")
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let context = delegate.persistentContainer.viewContext
-//        let location = EventLocation(context: context)
-//        location.name = "Hoyts"
-//        location.address = "Eastland"
-//        location.city = "Ringwood"
-//        location.country = "AU"
-//        
-//        let event = WeatherEvent(context: context)
-//        event.title = "First Event Title"
-//        event.dateTime = NSDate()
-//        event.eventLocation = location
-//        delegate.saveContext()
-        
-        do {
-            let events : [WeatherEvent] = try context.fetch(WeatherEvent.fetchRequest())
-            print("Printing Events")
-            for event in events {
-                print(event.asString())
-            }
-            
-        }
-        catch {
-                
-        }
-        print("=================================================")
-        
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+
     override func viewDidAppear(_ animated: Bool) {
-        print("Before Did Appear")
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         EventManager.shared.loadEventsFrom(context: context)
-        print("Weather Manager Cities After Events Init: \(WeatherManager.shared.userCities.count)")
-        
-        
         let sem = DispatchSemaphore(value: 0)
         WeatherManager.shared.updateAllCities {
             EventManager.shared.updateAllEventForecasts()
-            self.navBar.cityButton.titleLabel?.text = "\(currentCity.city!)"
             updateWeatherViewFrom(index: 0)
             self.eventTableView.reloadData()
             //self.weatherDetailsView.isUserInteractionEnabled = true
@@ -105,17 +70,31 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             sem.signal()
         }
         sem.wait()
-        
-        for city in WeatherManager.shared.cityWeatherForecasts {
-            print("\(city.location.city!), \(city.location.country!)")
-        }
-        print("After Did Appear")
+        self.updateEmptyTableViewConstraints()
     }
+    
+    override func viewDidLayoutSubviews() {
+        self.navBar.cityButton.titleLabel!.text = "\(currentCity.city!) ⌵"
+    }
+    
+    // MARK: - Presentation Style
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+    
     // MARK:- Table View Data Source/Delegate
-   
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let day =  currentDate.addingTimeInterval(TimeInterval(currentPage * self.daySeconds))
-        return EventManager.shared.eventsFor(day: day).count
+        
+        let numberOfEvents = EventManager.shared.eventsFor(day: day).count
+        
+        if numberOfEvents == 0 {
+            tableView.addSubview(self.emptyTableView)
+        }
+        else {
+            self.emptyTableView.removeFromSuperview()
+        }
+        return numberOfEvents
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -154,12 +133,17 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         return .lightContent
     }
     
+    // MARK: - HomePageDelegate Methods
+    
     func pageSwitchedTo(index: Int) {
         updateWeatherViewFrom(index: index)
         self.currentPage = index
         self.eventTableView.reloadData()
     }
     
+    // MARK: - Other Functions
+    
+    /// Updates the main weather view with details from the day's weather.
     private func updateWeatherViewFrom(index : Int) {
         self.weatherDetailsView.pageControl.currentPage = index
         
@@ -210,9 +194,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
     }
-    
-    // MARK: - Weather Nav Bar Delegate
-    
+   
+    // MARK: - WeatherNavBarDelegate Methods
     func todayButtonPressed() {
         updateWeatherViewFrom(index: 0)
         self.currentPage = 0
@@ -220,13 +203,31 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.eventTableView.reloadData()
     }
     
+    /// Other functionality to run when the city button is pressed.
     func cityButtonPressed() {
         
     }
     
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .none
+    // MARK: - CitySelector Methods
+    func cityChange(city: Location) {
+        print("City Change \(currentCity)")
+        self.currentCity = city
+        self.updateWeatherViewFrom(index: 0)
+        self.updateBackgroundImagesWith(city: self.currentCity)
+        
+        self.navBar.cityButton.titleLabel?.text = "\(currentCity.city!) ⌵"
+        self.backgroundImagePageVC?.jumptoPage(index: 0)
+        self.currentPage = 0
+        self.eventTableView.reloadData()
+        
     }
+    
+    // MARK: - AddEventDelegate Methods
+    func eventAdded(event: Event) {
+        self.eventTableView.reloadData()
+    }
+   
+    // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "citySelectorSegue" {
@@ -249,21 +250,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
-    func cityChange(city: Location) {
-        self.currentCity = city
-        self.updateWeatherViewFrom(index: 0)
-        self.updateBackgroundImagesWith(city: city)
-        self.navBar.cityButton.titleLabel?.text = "\(city.city!) ⌵"
-        self.backgroundImagePageVC?.jumptoPage(index: 0)
-        self.currentPage = 0
-        self.eventTableView.reloadData()
-
-    }
-    
-    func eventAdded(event: Event) {
-        self.eventTableView.reloadData()
-    }
-    
+    // MARK: - Other Methods
     func updateBackgroundImagesWith(city : Location) {
         let forecast = WeatherManager.shared.forecastsFor(location: city)
         
@@ -276,6 +263,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         vc?.updateBackgroundImage()
     }
     
+    /// Converts a weekday integer into a string.
     func getWeekdayFrom(number : Int) -> String {
         print("Weekday Number: \(number)")
         switch number {
@@ -298,9 +286,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
+    /// Updates the loadingScreenViews constraints when it loads.
     func updateLoadScreenConstraints() {
-        // Get the superview's layout
-        
         self.loadingView.translatesAutoresizingMaskIntoConstraints = false
         let leading = NSLayoutConstraint(item: self.loadingView, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1.0, constant: 0.0)
         let trailing = NSLayoutConstraint(item: self.loadingView, attribute: .trailing, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1.0, constant: 0.0)
@@ -309,6 +296,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
       
         self.view.addConstraints([leading, trailing, top, bottom])
         self.view.layoutIfNeeded()
+    }
+    
+    /// Centers the view inside an the eventTableView if it is empty.
+    func updateEmptyTableViewConstraints() {
+        self.emptyTableView.center = self.eventTableView.center
     }
 }
 

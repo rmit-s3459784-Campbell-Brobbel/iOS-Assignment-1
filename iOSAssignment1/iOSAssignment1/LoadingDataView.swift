@@ -10,17 +10,14 @@ import UIKit
 
 class LoadingDataView: UIView {
 
+    // MARK:- IBOutlets
+
     @IBOutlet weak var textLabel : UILabel!
     @IBOutlet weak var activityIndicator : UIActivityIndicatorView!
-        
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
+   
     
+    // MARK:- Custom Methods
+
     func showView() {
         self.alpha = 1
     }

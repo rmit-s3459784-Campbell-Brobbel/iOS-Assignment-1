@@ -10,12 +10,18 @@ import UIKit
 
 class EventDetailsTableViewCell: UITableViewCell {
     
+    /// Event the cell uses as a data source.
     var event : Event?
     
+    /// Event Time Label
     @IBOutlet weak var timeLabel: UILabel!
+    /// Event Forecast Image
     @IBOutlet weak var forecastImage: UIImageView!
+    /// Event Location Details Label
     @IBOutlet weak var eventLocationLabel: UILabel!
+    /// Event Title Label
     @IBOutlet weak var eventTitleLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -27,6 +33,7 @@ class EventDetailsTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    /// Update the cell details with the details from an Event.
     public func updateCellWithEvent(event : Event) {
         self.event = event
         let hour = String(format: "%02d", Calendar.current.component(.hour, from: event.eventDateTime))

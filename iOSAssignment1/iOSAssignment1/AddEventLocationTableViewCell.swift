@@ -10,7 +10,8 @@ import UIKit
 import MapKit
 
 class AddEventLocationTableViewCell: UITableViewCell {
-
+    
+    /// Placemark used for displaying location.
     var placemark : MKPlacemark?
     
     override func awakeFromNib() {

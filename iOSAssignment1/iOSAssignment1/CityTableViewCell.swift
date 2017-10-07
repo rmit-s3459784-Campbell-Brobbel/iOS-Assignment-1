@@ -9,7 +9,8 @@
 import UIKit
 
 class CityTableViewCell: UITableViewCell {
-
+    
+    /// Label used for presenting city details.
     @IBOutlet weak var cityLabel: UILabel!
     
     override func awakeFromNib() {

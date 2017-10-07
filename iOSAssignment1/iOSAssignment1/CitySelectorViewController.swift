@@ -8,7 +8,7 @@
 
 import UIKit
 
-
+/// A protocol for updating other controllers with information about the selected city.
 protocol CitySelector {
     func cityChange(city : Location)
 }
@@ -19,6 +19,8 @@ class CitySelectorViewController: UIViewController, UITableViewDataSource, UITab
     
     var citySelector : CitySelector?
     
+    // MARK:- View Methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.cityTableView.dataSource = self
@@ -27,11 +29,8 @@ class CitySelectorViewController: UIViewController, UITableViewDataSource, UITab
         // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+    // MARK:- CityNavBar Delegate Methods
+
     func cancelButtonPressed() {
         self.dismiss(animated: true, completion: nil)
     }
@@ -41,10 +40,8 @@ class CitySelectorViewController: UIViewController, UITableViewDataSource, UITab
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return WeatherManager.shared.cities.count
-
         }
         return WeatherManager.shared.userCities.count
-
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -53,6 +50,7 @@ class CitySelectorViewController: UIViewController, UITableViewDataSource, UITab
         }
         return "User Cities"
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var location : Location!
         if indexPath.section == 0 {
@@ -70,10 +68,10 @@ class CitySelectorViewController: UIViewController, UITableViewDataSource, UITab
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
             self.citySelector?.cityChange(city: WeatherManager.shared.cities[indexPath.row])
-
         }
         else {
             self.citySelector?.cityChange(city: WeatherManager.shared.userCities[indexPath.row])
@@ -81,6 +79,4 @@ class CitySelectorViewController: UIViewController, UITableViewDataSource, UITab
         tableView.deselectRow(at: indexPath, animated: true)
         dismiss(animated: true, completion: nil)
     }
-    
-    
 }
