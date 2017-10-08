@@ -80,7 +80,7 @@ class WeatherManager {
     
     // Downloads the weather info for all of the cities.
     public func updateAllCities(completion : () -> Void) {
-        
+        self.cityWeatherForecasts = []
         for city in cities {
             print("\(city.city)")
 
